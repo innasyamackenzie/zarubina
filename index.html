@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0E0C0A">
+<title>Zarubina</title>
+<meta name="description" content="Zarubina. Private wardrobe direction: your wardrobe, handled. By application.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Italiana&family=Pinyon+Script&family=Jost:wght@300;400;500&display=swap">
+<style>
+/* Layout: full-bleed, edge to edge. Split spreads where the photograph runs to the screen edge; a warm near-black salon ground, gold hairlines, oxblood only as atmosphere. Dark by design. */
+:root{
+  color-scheme:dark;
+  --noir:#0E0C0A; --salon:#15120F; --salon-2:#1C1814;
+  --ivory:#EDE6D9; --ivory-2:#BDB4A6; --taupe:#9C9285;
+  --gold:#C9AD7A; --ox:#5C1720;
+  --line:rgba(237,230,217,.13); --line-gold:rgba(201,173,122,.42);
+  --gutter:clamp(20px,5vw,96px);
+  --display:'Italiana','Didot','Bodoni 72',Georgia,serif;
+  --script:'Pinyon Script','Snell Roundhand','Apple Chancery',cursive;
+  --body:'Jost','Futura','Avenir Next','Helvetica Neue',Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px;background:var(--noir)}
+body{margin:0;background:var(--noir);color:var(--ivory);font-family:var(--body);font-weight:400;font-size:17.5px;line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+::selection{background:var(--gold);color:var(--noir)}
+img{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0}
+.wrap{width:100%;padding-inline:var(--gutter)}
+
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;color:var(--ivory);text-wrap:balance;letter-spacing:.01em}
+h2{font-size:clamp(2.2rem,4.2vw,4rem);line-height:1.1}
+h3{font-size:clamp(1.55rem,2vw,1.95rem);line-height:1.2}
+.label{font-size:.74rem;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--gold)}
+.label.quiet{color:var(--taupe)}
+.lede{font-size:clamp(1.08rem,1.3vw,1.25rem);line-height:1.75;color:var(--ivory);font-weight:300;max-width:56ch}
+.body{color:var(--ivory-2);max-width:60ch}
+.gold{color:var(--gold)}
+.stack{display:flex;flex-direction:column;gap:22px}
+.rule{height:1px;width:72px;background:var(--gold);border:0;margin:0}
+
+.btn{display:inline-flex;align-items:center;gap:14px;font-family:var(--body);font-size:.76rem;font-weight:500;letter-spacing:.3em;text-transform:uppercase;text-decoration:none;padding:17px 30px;border:1px solid var(--gold);color:var(--noir);background:var(--gold);transition:background .35s,color .35s,border-color .35s;cursor:pointer}
+.btn:hover{background:var(--ivory);border-color:var(--ivory)}
+.btn.line{background:transparent;color:var(--ivory);border-color:var(--line-gold)}
+.btn.line:hover{border-color:var(--gold);color:var(--gold)}
+.btn .arr{font-family:var(--display);letter-spacing:0;font-size:1.1rem;line-height:1}
+.ctas{display:flex;flex-wrap:wrap;gap:14px}
+
+/* ---------- navigation ---------- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .5s,border-color .5s;border-bottom:1px solid transparent}
+.nav.solid{background:rgba(14,12,10,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;height:78px}
+.brand{font-family:var(--display);font-size:1.2rem;letter-spacing:.48em;text-decoration:none;color:var(--ivory)}
+.links{display:flex;align-items:center;gap:clamp(18px,2.4vw,40px)}
+.links a{font-size:.74rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;text-decoration:none;color:var(--ivory);transition:color .3s;position:relative;padding-block:6px;text-shadow:0 1px 12px rgba(0,0,0,.6)}
+.links a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--gold);transition:right .4s}
+.links a:hover{color:var(--gold)}
+.links a:hover::after{right:0}
+.links a.apply{color:var(--noir);background:var(--gold);padding:11px 22px;text-shadow:none}
+.links a.apply::after{display:none}
+.links a.apply:hover{background:var(--ivory);color:var(--noir)}
+.menu-btn{display:none;background:none;border:0;color:var(--ivory);font:500 .74rem var(--body);letter-spacing:.3em;text-transform:uppercase;cursor:pointer;padding:10px 0}
+@media(max-width:980px){.links{display:none}.menu-btn{display:block}}
+.overlay{position:fixed;inset:0;z-index:60;background:var(--noir);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 24px) var(--gutter) 40px}
+.overlay[hidden]{display:none!important}
+.overlay .head{display:flex;justify-content:space-between;align-items:center;height:54px}
+.overlay nav{display:flex;flex-direction:column;gap:8px;margin-top:8vh}
+.overlay nav a{font-family:var(--display);font-size:clamp(2.2rem,9vw,3.4rem);text-decoration:none;color:var(--ivory);line-height:1.25}
+.overlay nav a:hover{color:var(--gold)}
+.overlay .foot{margin-top:auto;color:var(--taupe);font-size:.9rem}
+
+/* ---------- hero: text left, photograph bleeding to the right edge ---------- */
+.hero{display:grid;grid-template-columns:1fr;background:radial-gradient(ellipse 60% 70% at 20% 60%,rgba(92,23,32,.22),transparent 70%),var(--noir)}
+@media(min-width:980px){.hero{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);min-height:min(100vh,1080px)}}
+.hero .words{display:flex;flex-direction:column;justify-content:center;gap:28px;padding:calc(78px + env(safe-area-inset-top,0px) + 48px) var(--gutter) 56px;min-width:0}
+.hero .photo{position:relative;min-height:62vh;overflow:hidden;order:-1}
+@media(min-width:980px){.hero .photo{order:0;min-height:0}}
+.hero .photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;animation:settle 3.4s cubic-bezier(.2,.7,.1,1) both}
+.hero .photo::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--noir) 0%,rgba(14,12,10,0) 28%),linear-gradient(0deg,rgba(14,12,10,.55) 0%,rgba(14,12,10,0) 30%)}
+@media(max-width:979px){.hero .photo::before{background:linear-gradient(0deg,var(--noir) 0%,rgba(14,12,10,0) 45%),linear-gradient(180deg,rgba(14,12,10,.7) 0%,rgba(14,12,10,0) 25%)}.hero .words{padding-top:8px}}
+.hero .photo::after{content:"";position:absolute;z-index:2;inset:18px;border:1px solid var(--line-gold);pointer-events:none}
+@keyframes settle{from{transform:scale(1.07)}to{transform:scale(1)}}
+.wordmark{font-family:var(--script);font-weight:400;font-size:clamp(4.6rem,9.5vw,10rem);line-height:.95;margin:0 0 0 -.04em;padding:.12em .1em .18em 0;
+  background:linear-gradient(105deg,#7E6236 0%,#C9AD7A 18%,#F1E2BC 30%,#B89458 42%,#E9D5A6 55%,#8F7545 70%,#D8BE8A 84%,#9E8150 100%);
+  background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:foil 9s ease-in-out infinite alternate}
+@keyframes foil{from{background-position:0% 50%}to{background-position:100% 50%}}
+.hero h1{font-size:clamp(2.2rem,4vw,3.6rem);line-height:1.12}
+.hero .lede{max-width:44ch}
+.marks{display:flex;flex-wrap:wrap;gap:10px 28px;padding-top:26px;margin-top:10px;border-top:1px solid var(--line);font-size:.72rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;color:var(--taupe)}
+.marks span + span::before{content:"·";color:var(--gold);margin-right:28px}
+@media(max-width:700px){.marks{flex-direction:column;gap:8px}.marks span + span::before{display:none}}
+
+/* ---------- sections ---------- */
+section.s{padding-block:clamp(88px,10vw,160px)}
+section.s.alt{background:var(--salon)}
+.head-row{display:grid;grid-template-columns:1fr;gap:22px;margin-bottom:clamp(44px,5vw,80px)}
+@media(min-width:980px){.head-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:80px;align-items:end}}
+
+/* ---------- process: four photographed steps ---------- */
+.steps{display:grid;grid-template-columns:1fr;gap:56px 24px}
+@media(min-width:640px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:1100px){.steps{grid-template-columns:repeat(4,minmax(0,1fr));gap:32px}}
+.step{display:flex;flex-direction:column;gap:16px;min-width:0}
+.step .frame{position:relative;aspect-ratio:3/4;overflow:hidden;margin:0}
+.step .frame::after{content:"";position:absolute;inset:10px;border:1px solid var(--line-gold);pointer-events:none}
+.step .frame img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.1,1),filter .8s;filter:brightness(.92)}
+.step:hover .frame img{transform:scale(1.04);filter:brightness(1.02)}
+.step .num{display:flex;align-items:center;gap:14px;font-family:var(--display);font-size:1.25rem;color:var(--gold)}
+.step .num::after{content:"";flex:1;height:1px;background:var(--line)}
+.step p{color:var(--ivory-2);font-size:1rem;line-height:1.7}
+@media(min-width:1100px){.step:nth-child(even){margin-top:64px}}
+
+/* ---------- time band: full-bleed photograph ---------- */
+.band{position:relative;overflow:hidden;min-height:clamp(560px,78vh,860px);display:flex;align-items:center}
+.band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%}
+.band::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,rgba(14,12,10,.94) 0%,rgba(14,12,10,.78) 38%,rgba(14,12,10,.2) 75%,rgba(14,12,10,.35) 100%)}
+.band::after{content:"";position:absolute;z-index:1;inset:18px;border:1px solid rgba(201,173,122,.3);pointer-events:none}
+.band .wrap{position:relative;z-index:2;padding-block:96px}
+.band .inner{max-width:760px;display:flex;flex-direction:column;gap:26px}
+.band h2{font-size:clamp(2.4rem,5vw,4.6rem);line-height:1.08}
+@media(max-width:700px){.band::before{background:linear-gradient(0deg,rgba(14,12,10,.95) 30%,rgba(14,12,10,.55) 100%)}}
+
+/* ---------- rhythm ---------- */
+.dates{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:900px){.dates{grid-template-columns:1fr 1fr 1.25fr}}
+.date{background:var(--salon-2);padding:clamp(32px,3vw,52px);display:flex;flex-direction:column;gap:14px}
+.date .big{font-family:var(--display);font-size:clamp(2.1rem,3vw,2.9rem);line-height:1.05;color:var(--gold)}
+.date p{color:var(--ivory-2);font-size:1rem}
+.date.rot ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;font-size:1rem;color:var(--ivory-2)}
+.date.rot li{display:grid;grid-template-columns:92px 1fr;gap:12px}
+.date.rot li b{font-weight:500;color:var(--ivory);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;padding-top:5px}
+
+/* ---------- engagements ---------- */
+.intensive{display:grid;grid-template-columns:1fr;gap:26px;padding:clamp(32px,3.5vw,56px);border:1px solid var(--line-gold);background:var(--salon-2);margin-bottom:28px}
+@media(min-width:980px){.intensive{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:72px;align-items:center}}
+.intensive ul{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr;gap:12px 36px;color:var(--ivory-2);font-size:1rem}
+@media(min-width:620px){.intensive ul{grid-template-columns:1fr 1fr}}
+.intensive li,.tier li{padding-left:22px;position:relative}
+.intensive li::before,.tier li::before{content:"";position:absolute;left:0;top:.8em;width:10px;height:1px;background:var(--gold)}
+.tiers{display:grid;grid-template-columns:1fr;gap:28px}
+@media(min-width:980px){.tiers{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}}
+.tier{border:1px solid var(--line);background:var(--noir);padding:clamp(36px,3vw,52px) clamp(28px,2.6vw,44px) 36px;display:flex;flex-direction:column;gap:18px;min-width:0;position:relative;transition:border-color .4s}
+.tier:hover{border-color:var(--line-gold)}
+.tier.flag{border-color:var(--gold)}
+.tier .ribbon{position:absolute;top:-1px;left:clamp(28px,2.6vw,44px);background:var(--gold);color:var(--noir);font-size:.64rem;font-weight:500;letter-spacing:.26em;text-transform:uppercase;padding:6px 12px}
+.tier h3{font-size:clamp(2rem,2.4vw,2.4rem)}
+.tier .where{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--taupe)}
+.tier ul{margin:6px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:12px;color:var(--ivory-2);font-size:1rem;line-height:1.55}
+.tier .term{margin-top:auto;padding-top:20px;border-top:1px solid var(--line);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold)}
+.pricing-note{display:flex;flex-wrap:wrap;gap:14px 48px;align-items:baseline;justify-content:space-between;margin-top:44px;padding-top:30px;border-top:1px solid var(--line)}
+.pricing-note b{font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,2.4vw,2.2rem);color:var(--ivory)}
+.pricing-note span{color:var(--ivory-2);max-width:62ch;font-size:1rem}
+
+/* ---------- diptych: two photographs, edge to edge ---------- */
+.diptych{display:grid;grid-template-columns:1fr;gap:4px;background:var(--noir)}
+@media(min-width:760px){.diptych{grid-template-columns:1.1fr .9fr}}
+.diptych figure{position:relative;margin:0;overflow:hidden;aspect-ratio:4/5}
+@media(min-width:760px){.diptych figure{aspect-ratio:auto;height:min(92vh,980px)}}
+.diptych img{width:100%;height:100%;object-fit:cover;transition:transform 1.6s cubic-bezier(.2,.7,.1,1)}
+.diptych figure:hover img{transform:scale(1.03)}
+.diptych figcaption{position:absolute;left:clamp(24px,3vw,48px);bottom:clamp(24px,3vw,44px);z-index:2;display:flex;flex-direction:column;gap:8px}
+.diptych figcaption b{font-family:var(--display);font-weight:400;font-size:clamp(1.6rem,2.6vw,2.4rem);color:var(--ivory);line-height:1.15}
+.diptych figure::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(14,12,10,.8) 0%,rgba(14,12,10,0) 45%)}
+
+/* ---------- accordions ---------- */
+.acc-grid{display:grid;grid-template-columns:1fr;gap:0 96px}
+@media(min-width:980px){.acc-grid{grid-template-columns:1fr 1fr}}
+.acc{border-top:1px solid var(--line-gold)}
+@media(max-width:979px){.acc + .acc{border-top:0}}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) 22px;gap:24px;padding:26px 0;font-family:var(--display);font-size:clamp(1.25rem,1.6vw,1.5rem);line-height:1.35;color:var(--ivory);transition:color .3s}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:hover{color:var(--gold)}
+.acc summary::after{content:"";width:14px;height:14px;margin-top:.35em;background:linear-gradient(var(--gold),var(--gold)) center/14px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) center/1px 14px no-repeat;transition:transform .4s}
+.acc details[open] summary::after{transform:rotate(45deg)}
+.acc details p{padding:0 40px 28px 0;color:var(--ivory-2);font-size:1rem}
+
+/* ---------- apply ---------- */
+.apply-grid{display:grid;grid-template-columns:1fr;gap:56px}
+@media(min-width:980px){.apply-grid{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:120px}}
+.apply-aside{display:flex;flex-direction:column;gap:22px}
+@media(min-width:980px){.apply-aside{position:sticky;top:120px;align-self:start}}
+form{display:grid;grid-template-columns:1fr;gap:36px 40px}
+@media(min-width:760px){form{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}}
+.q{display:flex;flex-direction:column;gap:10px;min-width:0}
+.q label,.q legend{font-size:.74rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ivory-2);padding:0;line-height:1.6}
+.q .n{font-family:var(--display);color:var(--gold);letter-spacing:0;font-size:1rem;margin-right:10px;text-transform:none}
+.req{color:var(--gold);margin-left:6px}
+input[type=text],input[type=email],textarea,select{font:400 1.02rem var(--body);color:var(--ivory);background:transparent;border:0;border-bottom:1px solid rgba(237,230,217,.28);border-radius:0;padding:10px 0 12px;width:100%;transition:border-color .3s;-webkit-appearance:none;appearance:none}
+textarea{min-height:52px;resize:vertical;line-height:1.6}
+select{cursor:pointer;background-image:linear-gradient(45deg,transparent 50%,var(--gold) 50%),linear-gradient(135deg,var(--gold) 50%,transparent 50%);background-position:calc(100% - 12px) 50%,calc(100% - 7px) 50%;background-size:5px 5px;background-repeat:no-repeat}
+select option{background:var(--salon-2);color:var(--ivory)}
+input::placeholder,textarea::placeholder{color:#766D62}
+input:focus,textarea:focus,select:focus{outline:none;border-bottom-color:var(--gold)}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.chips label{position:relative;cursor:pointer;border:1px solid rgba(237,230,217,.24);padding:11px 18px;font-size:.72rem;letter-spacing:.2em;color:var(--ivory-2);transition:all .3s}
+.chips input{position:absolute;opacity:0;width:1px;height:1px}
+.chips label:hover{border-color:var(--gold)}
+.chips label:has(input:checked){border-color:var(--gold);background:rgba(201,173,122,.12);color:var(--ivory)}
+.chips label:has(input:focus-visible){outline:1px solid var(--gold);outline-offset:3px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-foot{display:flex;flex-wrap:wrap;gap:20px;align-items:center}
+.err{color:#E3A7A0;font-size:.95rem}
+.received{border:1px solid var(--line-gold);background:var(--salon-2);padding:48px clamp(24px,4vw,56px);display:flex;flex-direction:column;gap:18px}
+.received .note{font-size:.88rem;color:var(--taupe);border-top:1px solid var(--line);padding-top:16px}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--line);background:var(--noir)}
+footer .wrap{display:grid;grid-template-columns:1fr;gap:40px;padding-block:80px 48px}
+@media(min-width:860px){footer .wrap{grid-template-columns:2fr 1fr 1fr}}
+footer .wm{font-family:var(--script);font-size:clamp(3.2rem,5vw,4.6rem);line-height:1;color:var(--gold)}
+footer .col{display:flex;flex-direction:column;gap:8px;color:var(--ivory-2);font-size:.95rem}
+footer .col a{text-decoration:none}
+footer .col a:hover{color:var(--gold)}
+.fine{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-top:1px solid var(--line);padding-top:24px;font-size:.8rem;color:var(--taupe)}
+
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:1px solid var(--gold);outline-offset:4px}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">ZARUBINA</a>
+    <nav class="links" aria-label="Main">
+      <a href="#process">The process</a>
+      <a href="#rhythm">The month</a>
+      <a href="#engagements">Engagements</a>
+      <a href="#questions">Questions</a>
+      <a class="apply" href="#apply">Apply</a>
+    </nav>
+    <button class="menu-btn" id="menu-open" aria-expanded="false" aria-controls="overlay">Menu</button>
+  </div>
+</header>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="head"><span class="brand">ZARUBINA</span><button class="menu-btn" id="menu-close" style="display:block">Close</button></div>
+  <nav aria-label="Menu">
+    <a href="#process">The process</a>
+    <a href="#rhythm">The month</a>
+    <a href="#engagements">Engagements</a>
+    <a href="#questions">Questions</a>
+    <a href="#apply" class="gold">Apply</a>
+  </nav>
+  <p class="foot">Private wardrobe direction. By application.</p>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="words">
+    <span class="label">Private wardrobe direction</span>
+    <div class="wordmark" role="img" aria-label="Zarubina">Zarubina</div>
+    <h1>Your wardrobe, handled.</h1>
+    <p class="lede">The shopping, the searching and the second-guessing, taken entirely off your hands. Every piece found, fitted and ready before you need it, and your time given back to you.</p>
+    <div class="ctas">
+      <a class="btn" href="#apply">Apply for a place <span class="arr">→</span></a>
+      <a class="btn line" href="#process">The process</a>
+    </div>
+    <div class="marks"><span>By application</span><span>Limited places each season</span><span>In person &amp; virtual</span></div>
+  </div>
+  <div class="photo">
+    <img src="assets/img/hero.jpg" alt="A woman dressed in black at a lit boutique window at night">
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section class="s" id="process">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="stack"><span class="label">The process</span><h2>How it works.</h2></div>
+      <p class="lede">Four steps from a first letter to a wardrobe that looks after itself. After the first, almost nothing is asked of you.</p>
+    </div>
+    <div class="steps">
+      <article class="step">
+        <figure class="frame"><img src="assets/img/step-apply.jpg" alt="A lit window display at dusk" loading="lazy"></figure>
+        <span class="num">I</span>
+        <h3>Apply</h3>
+        <p>A short, private application, about ten minutes of your time. Every application is read and answered personally.</p>
+      </article>
+      <article class="step">
+        <figure class="frame"><img src="assets/img/step-consult.jpg" alt="An ornate 'Press for Champagne' button on tufted leather" loading="lazy"></figure>
+        <span class="num">II</span>
+        <h3>The consultation</h3>
+        <p>One private consultation, in person or virtual. Your proportions, palette and the way you live are understood once, properly, and set down in your written Style Direction.</p>
+      </article>
+      <article class="step">
+        <figure class="frame"><img src="assets/img/step-source.jpg" alt="A gilded rail of black and ivory tailoring" loading="lazy"></figure>
+        <span class="num">III</span>
+        <h3>Sourcing</h3>
+        <p>Every piece is found for you, across any label, and shortlisted with its price. You approve; fittings, returns and alterations are arranged for you.</p>
+      </article>
+      <article class="step">
+        <figure class="frame"><img src="assets/img/step-wardrobe.jpg" alt="Tweed jackets on a curved rail beneath a starlit ceiling" loading="lazy"></figure>
+        <span class="num">IV</span>
+        <h3>Your wardrobe, kept</h3>
+        <p>Month after month, your wardrobe is maintained and refined. Nothing to chase, nothing to remember, and never nothing to wear.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TIME BAND ============ -->
+<section class="band" aria-label="Your time">
+  <img src="assets/img/gallery.jpg" alt="" loading="lazy">
+  <div class="wrap">
+    <div class="inner">
+      <span class="label">The purpose</span>
+      <h2>The hours once spent shopping are <span class="gold">yours again.</span></h2>
+      <p class="lede">No weekends lost to shopping centres. No returns to queue for. No standing before a full wardrobe with nothing to wear on the morning it matters. Getting dressed becomes the easiest decision of your day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RHYTHM ============ -->
+<section class="s alt" id="rhythm">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="stack"><span class="label">The month</span><h2>A rhythm you never have to manage.</h2></div>
+      <p class="body">Two fixed dates each month, and a year planned in advance. Everything arrives digitally, in one place you can open on your phone.</p>
+    </div>
+    <div class="dates">
+      <div class="date">
+        <span class="label quiet">Every month</span>
+        <span class="big">The first Monday</span>
+        <p>Your wardrobe plan and acquisition list are updated and delivered, without being asked for.</p>
+      </div>
+      <div class="date">
+        <span class="label quiet">Every month</span>
+        <span class="big">The fifteenth</span>
+        <p>Your lookbook arrives. Purchases, fittings and alterations follow in the second half of the month.</p>
+      </div>
+      <div class="date rot">
+        <span class="label quiet">The year</span>
+        <ol>
+          <li><b>Month 1</b><span>Your wardrobe mapped: proportion, palette, signature, inventory.</span></li>
+          <li><b>2 – 4</b><span>Working, then everyday, then occasion.</span></li>
+          <li><b>5 – 6</b><span>Seasonal rotation, evening, and a six-month review.</span></li>
+          <li><b>7 – 12</b><span>A second, deeper pass. Fewer pieces, better ones.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ENGAGEMENTS ============ -->
+<section class="s" id="engagements">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="stack"><span class="label">Engagements</span><h2>Three retainers. Limited places.</h2></div>
+      <p class="body">Each engagement is private and ongoing. In-person sessions are for deciding; everything else is handled for you.</p>
+    </div>
+
+    <div class="intensive">
+      <div class="stack">
+        <span class="label">Where every client begins</span>
+        <h3>The Style Direction</h3>
+      </div>
+      <ul>
+        <li>A private consultation, in person or virtual</li>
+        <li>Proportion and line, assessed</li>
+        <li>Your palette, defined</li>
+        <li>Your Style Direction, written</li>
+        <li>A twelve-piece foundation lookbook</li>
+        <li>Credited in full against a retainer begun within fourteen days</li>
+      </ul>
+    </div>
+
+    <div class="tiers">
+      <article class="tier">
+        <span class="where">Virtual</span>
+        <h3>The Atelier</h3>
+        <ul>
+          <li>Your wardrobe plan, built and kept</li>
+          <li>One focus a month, three complete looks</li>
+          <li>Sourcing across any label</li>
+          <li>A monthly acquisition list</li>
+          <li>Replies within 48 hours</li>
+          <li>A quarterly review</li>
+        </ul>
+        <span class="term">Three-month minimum</span>
+      </article>
+      <article class="tier flag">
+        <span class="ribbon">The flagship</span>
+        <span class="where">Virtual &amp; in person</span>
+        <h3>The House</h3>
+        <ul>
+          <li>Everything in The Atelier</li>
+          <li>Up to three briefs a month, eight to ten looks</li>
+          <li>Personal shopping, returns and alterations handled</li>
+          <li>An in-person session each quarter</li>
+          <li>Seasonal rotation, twice a year</li>
+          <li>Replies within 24 hours, priority calendar</li>
+        </ul>
+        <span class="term">Three-month minimum</span>
+      </article>
+      <article class="tier">
+        <span class="where">By invitation</span>
+        <h3>Private Client</h3>
+        <ul>
+          <li>Everything in The House</li>
+          <li>Unrestricted briefs, run from your calendar</li>
+          <li>An in-person session every month</li>
+          <li>Full seasonal rebuilds and travel wardrobes</li>
+          <li>Event and day-of dressing</li>
+          <li>Same-day replies; mutual confidentiality</li>
+        </ul>
+        <span class="term">Six-month minimum</span>
+      </article>
+    </div>
+
+    <div class="pricing-note">
+      <b>Retainers begin at $950 a month.</b>
+      <span>Clothing is purchased directly from each brand and is never part of the fee. Recommendations are made independently, with no commission from any label.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIPTYCH ============ -->
+<section class="diptych" aria-label="In person and virtual">
+  <figure>
+    <img src="assets/img/boutique.jpg" alt="A rail of tailored coats in a dimly lit boutique" loading="lazy">
+    <figcaption><span class="label">In person</span><b>Sydney</b></figcaption>
+  </figure>
+  <figure>
+    <img src="assets/img/evening.jpg" alt="An arched, candlelit bar lined with bottles" loading="lazy">
+    <figcaption><span class="label">Virtually</span><b>Anywhere</b></figcaption>
+  </figure>
+</section>
+
+<!-- ============ QUESTIONS ============ -->
+<section class="s alt" id="questions">
+  <div class="wrap">
+    <div class="head-row">
+      <div class="stack"><span class="label">Questions</span><h2>Before you apply.</h2></div>
+      <p class="body">Stated plainly, so the commitment is easy to make and easy to leave.</p>
+    </div>
+    <div class="acc-grid">
+      <div class="acc">
+        <details open>
+          <summary>How much of my time does this take?</summary>
+          <p>Very little. One consultation at the start, then a few minutes each month to approve what's been found for you. Everything else is handled.</p>
+        </details>
+        <details>
+          <summary>What happens in a month when I have nothing on?</summary>
+          <p>Your wardrobe plan is still updated on the first Monday and the next season prepared. Quiet months are when a wardrobe is refined rather than added to.</p>
+        </details>
+        <details>
+          <summary>Is the fee separate from what I spend on clothes?</summary>
+          <p>Yes, always. You buy directly from each brand, and no commission is taken from any label, so every recommendation is made for you alone.</p>
+        </details>
+        <details>
+          <summary>Do I have to buy new things?</summary>
+          <p>No. What you already own is used first, and in some months nothing is bought at all. The aim is fewer pieces, held for longer.</p>
+        </details>
+        <details>
+          <summary>What sizes do you work with?</summary>
+          <p>Sizes 4 to 24.</p>
+        </details>
+        <details>
+          <summary>Will anyone know I work with Zarubina?</summary>
+          <p>Only if you choose. Images are requested, never assumed, and a mutual confidentiality agreement is standard for Private Clients.</p>
+        </details>
+      </div>
+      <div class="acc">
+        <details>
+          <summary>Minimum term and notice</summary>
+          <p>Three months for The Atelier and The House, six for Private Client. After that, thirty days' written notice ends the engagement.</p>
+        </details>
+        <details>
+          <summary>Payment</summary>
+          <p>Monthly in advance, by automatic card payment on the first of the month. The agreement is signed before the first delivery.</p>
+        </details>
+        <details>
+          <summary>Pausing</summary>
+          <p>One pause in any twelve months, for up to one month, arranged in advance.</p>
+        </details>
+        <details>
+          <summary>Made-to-order pieces</summary>
+          <p>Where nothing on the market answers the brief, a piece can be designed for you. Making it is quoted separately, at a retained-client rate.</p>
+        </details>
+        <details>
+          <summary>Your information</summary>
+          <p>Measurements, palette, preferences and purchase history are held privately and used only for your wardrobe.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPLY ============ -->
+<section class="s" id="apply">
+  <div class="wrap apply-grid">
+    <aside class="apply-aside">
+      <span class="label">Apply</span>
+      <h2>Every engagement begins with an application.</h2>
+      <p class="body">Applications are read weekly and every one receives a reply. Where the fit is right, you'll be invited to a short, private call.</p>
+      <hr class="rule">
+      <p class="body" style="font-size:.95rem">Ten questions, about ten minutes.</p>
+    </aside>
+
+    <div>
+      <form id="apply-form" novalidate>
+        <div class="q"><label for="f-name"><span class="n">i</span>Your name<span class="req">*</span></label><input type="text" id="f-name" name="name" autocomplete="name"></div>
+        <div class="q"><label for="f-email">Email<span class="req">*</span></label><input type="email" id="f-email" name="email" autocomplete="email"></div>
+        <div class="q full"><label for="f-where"><span class="n">ii</span>Where you're based</label><input type="text" id="f-where" name="where" placeholder="City, country"></div>
+        <div class="q full"><label for="f-do"><span class="n">iii</span>What you do, and how often you're seen doing it</label><textarea id="f-do" name="do" rows="2"></textarea></div>
+        <fieldset class="q full"><legend><span class="n">iv</span>Where getting dressed takes the most time</legend>
+          <div class="chips">
+            <label><input type="radio" name="weak" id="w1" value="Work">Work</label>
+            <label><input type="radio" name="weak" id="w2" value="Occasions">Occasions</label>
+            <label><input type="radio" name="weak" id="w3" value="Everyday">Everyday</label>
+            <label><input type="radio" name="weak" id="w4" value="Evenings">Evenings</label>
+          </div>
+        </fieldset>
+        <div class="q full"><label for="f-events"><span class="n">v</span>Events in the next six months, and what kind</label><textarea id="f-events" name="events" rows="2"></textarea></div>
+        <div class="q"><label for="f-say"><span class="n">vi</span>What people say about how you dress now</label><textarea id="f-say" name="say" rows="2"></textarea></div>
+        <div class="q"><label for="f-want"><span class="n">vii</span>What you'd want them to say instead</label><textarea id="f-want" name="want" rows="2"></textarea></div>
+        <div class="q full"><label for="f-before"><span class="n">viii</span>Have you worked with a stylist before? What ended it?</label><textarea id="f-before" name="before" rows="2"></textarea></div>
+        <div class="q"><label for="f-tier"><span class="n">ix</span>Retainer of interest</label>
+          <select id="f-tier" name="tier"><option value="">Select</option><option>The Atelier</option><option>The House</option><option>Private Client</option><option>Not sure yet</option></select></div>
+        <div class="q"><label for="f-month">Preferred start</label><select id="f-month" name="month"><option value="">Select</option></select></div>
+        <div class="q full"><label for="f-intro"><span class="n">x</span>Who introduced you, or where did you find Zarubina?<span class="req">*</span></label><input type="text" id="f-intro" name="intro"></div>
+        <div class="hp" aria-hidden="true"><label for="f-web">Leave empty</label><input type="text" id="f-web" name="website" tabindex="-1" autocomplete="off"></div>
+        <div class="form-foot full">
+          <button class="btn" type="submit">Send application <span class="arr">→</span></button>
+          <span class="err" id="f-err" role="alert" hidden></span>
+        </div>
+      </form>
+
+      <div class="received" id="received" hidden>
+        <span class="label">Received</span>
+        <h3 id="rec-h">Thank you.</h3>
+        <p class="body">Applications are read weekly and every one receives a reply, whatever the answer. You'll hear back either way.</p>
+        <p class="note" id="rec-note" hidden>This preview isn't connected to an inbox yet, so nothing was sent.</p>
+        <div><button class="btn line" type="button" id="again">Start again</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="col">
+      <span class="wm">Zarubina</span>
+      <span class="label quiet" style="margin-top:10px">Private wardrobe direction</span>
+      <span style="margin-top:6px">In person in Sydney. Virtually, anywhere. By application.</span>
+    </div>
+    <div class="col">
+      <span class="label quiet">The house</span>
+      <a href="#process">The process</a>
+      <a href="#rhythm">The month</a>
+      <a href="#engagements">Engagements</a>
+      <a href="#questions">Questions</a>
+      <a href="#apply">Apply</a>
+    </div>
+    <div class="col">
+      <span class="label quiet">Elsewhere</span>
+      <span>zarubina.co</span>
+      <span>@houseofzarubina</span>
+    </div>
+    <div class="fine"><span>© 2026 Zarubina</span><span>By application · Limited places each season</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* Paste a form service URL here (e.g. a Formspree endpoint) to receive applications by email. */
+  var FORM_ENDPOINT = "";
+
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('solid',window.scrollY>40);}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  var ov=document.getElementById('overlay'),openB=document.getElementById('menu-open'),closeB=document.getElementById('menu-close');
+  function setMenu(o){ov.hidden=!o;openB.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';}
+  openB.addEventListener('click',function(){setMenu(true);});
+  closeB.addEventListener('click',function(){setMenu(false);});
+  ov.querySelectorAll('nav a').forEach(function(a){a.addEventListener('click',function(){setMenu(false);});});
+
+  var sel=document.getElementById('f-month'),d=new Date();
+  for(var i=1;i<=9;i++){var m=new Date(d.getFullYear(),d.getMonth()+i,1),o=document.createElement('option');
+    o.textContent=m.toLocaleDateString('en-AU',{month:'long',year:'numeric'});sel.appendChild(o);}
+
+  var form=document.getElementById('apply-form'),err=document.getElementById('f-err'),rec=document.getElementById('received');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(document.getElementById('f-web').value)return;
+    var name=document.getElementById('f-name').value.trim(),
+        email=document.getElementById('f-email').value.trim(),
+        intro=document.getElementById('f-intro').value.trim(),miss=[];
+    if(!name)miss.push('your name');
+    if(!/^\S+@\S+\.\S+$/.test(email))miss.push('an email address for the reply');
+    if(!intro)miss.push('who introduced you, or where you found Zarubina');
+    if(miss.length){err.textContent='Please add '+miss.join(', ')+'.';err.hidden=false;return;}
+    err.hidden=true;
+    function done(sent){
+      document.getElementById('rec-h').textContent='Thank you, '+name.split(' ')[0]+'.';
+      document.getElementById('rec-note').hidden=sent;
+      form.hidden=true;rec.hidden=false;rec.scrollIntoView({block:'center'});
+    }
+    if(!FORM_ENDPOINT){done(false);return;}
+    fetch(FORM_ENDPOINT,{method:'POST',headers:{'Accept':'application/json'},body:new FormData(form)})
+      .then(function(r){if(!r.ok)throw 0;done(true);})
+      .catch(function(){err.textContent='Your application couldn’t be sent just now. Please try again in a moment.';err.hidden=false;});
+  });
+  document.getElementById('again').addEventListener('click',function(){form.reset();rec.hidden=true;form.hidden=false;});
+})();
+</script>
+
+</body>
+</html>
